@@ -8,7 +8,6 @@ import { Link } from 'react-scroll';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
     <Header/>
     <App />
     <footer className="bg-gray-900 text-white py-8 text-center">
@@ -28,6 +27,6 @@ createRoot(document.getElementById('root')).render(
           </Link>
         </nav>
       </footer>
-    </BrowserRouter>
+    
   </StrictMode>,
 )
