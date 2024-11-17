@@ -7,8 +7,6 @@ import FeatureSection from "./components/FeatureSection";
 import AboutSection from "./components/AboutSection";
 import TestimonialSection from "./components/TestimonialSection";
 import ContactSection from "./components/ContactSection";
-import Login from "./login";
-import Register from "./Register";
 import Home from "./Home";
 import Book from "./Book";
 import Rooms from './components/Rooms';
