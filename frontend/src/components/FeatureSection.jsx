@@ -1,41 +1,112 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 import Badminton from '../assets/badminton.jpg';
 import Swimming from '../assets/swimming.jpg';
 import FunctionRoom from '../assets/function.jpg';
-import { motion } from 'framer-motion';
 
 const FeatureSection = () => {
+  const sectionRef = useRef(null);
+  const cursorRef = useRef(null);
+
   const facilities = [
     { name: 'Badminton Court', image: Badminton, link: '/badminton-court' },
     { name: 'Swimming Pool', image: Swimming, link: '/swimming-pool' },
     { name: 'Function Room', image: FunctionRoom, link: '/function-room' },
   ];
 
+  useEffect(() => {
+    const cursor = cursorRef.current;
+
+    const onMouseMove = (e) => {
+      gsap.to(cursor, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.1,
+        ease: 'power2.out',
+      });
+    };
+
+    const onMouseEnterSection = () => {
+      gsap.to(cursor, {
+        opacity: 1, // Show the ball cursor
+        duration: 0.3,
+      });
+      document.body.style.cursor = 'none'; // Hide the default cursor
+    };
+
+    const onMouseLeaveSection = () => {
+      gsap.to(cursor, {
+        opacity: 0, // Hide the ball cursor
+        duration: 0.3,
+      });
+      document.body.style.cursor = 'auto'; // Restore the default cursor
+    };
+
+    const onMouseEnterCard = (card) => {
+      gsap.to(card, {
+        scale: 1.1,
+        duration: 0.3,
+        boxShadow: '0 15px 30px rgba(0, 0, 0, 0.2)',
+      });
+    };
+
+    const onMouseLeaveCard = (card) => {
+      gsap.to(card, {
+        scale: 1,
+        duration: 0.3,
+        boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
+      });
+    };
+
+    const section = sectionRef.current;
+    const cards = section.querySelectorAll('.feature-card');
+
+    section.addEventListener('mouseenter', onMouseEnterSection);
+    section.addEventListener('mouseleave', onMouseLeaveSection);
+    document.addEventListener('mousemove', onMouseMove);
+
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', () => onMouseEnterCard(card));
+      card.addEventListener('mouseleave', () => onMouseLeaveCard(card));
+    });
+
+    return () => {
+      section.removeEventListener('mouseenter', onMouseEnterSection);
+      section.removeEventListener('mouseleave', onMouseLeaveSection);
+      document.removeEventListener('mousemove', onMouseMove);
+      cards.forEach((card) => {
+        card.removeEventListener('mouseenter', () => onMouseEnterCard(card));
+        card.removeEventListener('mouseleave', () => onMouseLeaveCard(card));
+      });
+    };
+  }, []);
+
   return (
-    <section id="features" className="py-20 bg-gray-100">
+    <section
+      ref={sectionRef}
+      id="features"
+      className="py-20 bg-gray-100 relative"
+    >
+      {/* Custom Cursor */}
+      <div
+        ref={cursorRef}
+        className="w-16 h-16 rounded-full bg-white shadow-lg fixed pointer-events-none z-50 opacity-0"
+        style={{
+          transform: 'translate(-50%, -50%)',
+          mixBlendMode: 'difference',
+        }}
+      ></div>
+
       <div className="container mx-auto px-4">
-        <motion.h2
-          className="text-5xl font-extrabold text-gray-800 mb-12 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
+        <h2 className="text-5xl font-extrabold text-gray-800 mb-12 text-center">
           Our Facilities
-        </motion.h2>
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-          {facilities.map((facility, index) => (
-            <motion.a
+          {facilities.map((facility) => (
+            <a
               href={facility.link}
               key={facility.name}
-              className="relative block rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2, duration: 0.8 }} // Slower initial appearance
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.4, ease: 'easeInOut' }, // Slow down hover effect
-              }}
+              className="feature-card relative block rounded-lg overflow-hidden shadow-lg"
             >
               <div
                 className="h-64 bg-cover bg-center"
@@ -47,7 +118,7 @@ const FeatureSection = () => {
                   </h3>
                 </div>
               </div>
-            </motion.a>
+            </a>
           ))}
         </div>
       </div>

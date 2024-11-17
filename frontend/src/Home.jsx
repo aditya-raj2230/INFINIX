@@ -3,8 +3,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import badmintonImage from './assets/badminton.jpg';
 import swimmingImage from './assets/Swimming.jpg';
-import tennisImage from './assets/badminton.jpg';
-import gymImage from './assets/badminton.jpg';
+import tennisImage from './assets/tennis2.jpg';
+import gymImage from './assets/gym.jpg';
 
 // Hardcoded booked dates for each facility (use ISO 8601 format: YYYY-MM-DD)
 const bookedDates = {
