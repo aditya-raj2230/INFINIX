@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import Badminton from '../assets/badminton.jpg';
-import Swimming from '../assets/swimming.jpg';
+import Swimming from '../assets/Swimming.jpg';
 import FunctionRoom from '../assets/function.jpg';
 
 const FeatureSection = () => {
