@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import Badminton from '../assets/badminton.jpg';
 import Swimming from '../assets/Swimming.jpg';
-import FunctionRoom from '../assets/function.jpg';
+import FunctionRoom from '../assets/Function.jpg';
 
 const FeatureSection = () => {
   const sectionRef = useRef(null);
